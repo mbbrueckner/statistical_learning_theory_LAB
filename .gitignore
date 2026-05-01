@@ -13,7 +13,6 @@ venv/
 .ipynb_checkpoints/
 
 # Submissions (zip archives)
-sumbissions/*.zip
 submissions/*.zip
 
 # NumPy data files (generated artifacts)
