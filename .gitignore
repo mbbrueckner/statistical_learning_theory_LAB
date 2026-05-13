@@ -15,9 +15,5 @@ venv/
 # Submissions (zip archives)
 submissions/*.zip
 
-# NumPy data files (generated artifacts)
-*.npy
-
-
 #VS Code
 .vscode/
