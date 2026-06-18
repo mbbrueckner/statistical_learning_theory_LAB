@@ -17,3 +17,5 @@ submissions/*.zip
 
 #VS Code
 .vscode/
+
+einsum.md
