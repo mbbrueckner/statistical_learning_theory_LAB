@@ -1,0 +1,42 @@
+# ---------------------------------------------------------------------------
+# Environments and build artefacts
+# ---------------------------------------------------------------------------
+.venv/
+__pycache__/
+*.pyc
+
+# macOS
+.DS_Store
+
+# LaTeX auxiliaries (the PDF itself is tracked on purpose)
+report/*.aux
+report/*.bbl
+report/*.blg
+report/*.log
+report/*.out
+report/*.fls
+report/*.fdb_latexmk
+report/*.tmp
+report/*.toc
+report/*.synctex.gz
+
+# Editing backups
+*.bak
+*.old
+*.orig
+*~
+
+# stray artefacts of network/FUSE mounts
+.fuse_hidden*
+
+# ---------------------------------------------------------------------------
+# Third-party and course material: present locally, deliberately not published
+# ---------------------------------------------------------------------------
+
+# Published papers, copyright held by Springer / IEEE / ACM / the authors.
+# Every one of them is referenced by DOI and URL in report/references.bib.
+literature/
+
+# Course material by the lecturer, not ours to redistribute.
+evaluation_rubric_english.pdf
+slides_final_project.pdf
