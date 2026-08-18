@@ -33,8 +33,8 @@ plt.rcParams.update({
 
 
 def _bin_eff(df):
-    bins = [0, 2, 4, 6, 100]
-    labels = ["1–2", "3–4", "5–6", "7+"]
+    bins = [-1, 2, 4, 6, 100]
+    labels = ["≤2", "3–4", "5–6", "7+"]
     df = df.copy()
     df["eff_bin"] = pd.cut(df["eff_ops"], bins=bins, labels=labels)
     return df, labels
@@ -237,8 +237,9 @@ def _cv_selected(df: pd.DataFrame) -> pd.DataFrame:
 
 def tab_hyper():
     df = pd.read_csv(RESULTS / "hyper.csv")
-    lines = [r"\begin{tabular}{lcccc}", r"\toprule",
-             r"Configuration & med.\ NMSE$_{\mathrm{test}}$ & Recovery & med.\ \#fits & med.\ time [s] \\",
+    lines = [r"\begin{tabular}{lccccc}", r"\toprule",
+             r"Configuration & med.\ NMSE$_{\mathrm{test}}$ & Recovery & med.\ \#fits & "
+             r"med.\ time [s] & total time [s] \\",
              r"\midrule"]
     for name in CONFIG_ORDER:
         s = df[df.config == name]
@@ -249,15 +250,15 @@ def tab_hyper():
             label = r"default ($k_{\mathrm{ex}}{=}3$, no dedup, $B{=}15$, deg $2$)"
         lines.append(f"{label} & {_fmt(s.nmse_test.median())} & "
                      f"{100 * s.recovered.mean():.0f}\\% & {s.n_fitted.median():.0f} & "
-                     f"{s.time_s.median():.1f} \\\\")
+                     f"{s.time_s.median():.1f} & {s.time_s.sum():.0f} \\\\")
     sel = _cv_selected(df)
     oracle = df.sort_values("nmse_test").groupby("seed", as_index=False).first()
     lines += [r"\midrule",
               f"CV-selected per dataset & {_fmt(sel.nmse_test.median())} & "
               f"{100 * sel.recovered.mean():.0f}\\% & {sel.n_fitted.median():.0f} & "
-              f"{sel.time_s.median():.1f} \\\\",
+              f"{sel.time_s.median():.1f} & {sel.time_s.sum():.0f} \\\\",
               f"oracle (best test error) & {_fmt(oracle.nmse_test.median())} & "
-              f"{100 * oracle.recovered.mean():.0f}\\% & -- & -- \\\\",
+              f"{100 * oracle.recovered.mean():.0f}\\% & -- & -- & -- \\\\",
               r"\bottomrule", r"\end{tabular}"]
     (RESULTS / "tab_hyper.tex").write_text("\n".join(lines))
 
